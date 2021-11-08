@@ -79,4 +79,4 @@ print("sum of primes:", running_total)
 # https://www.journaldev.com/33182/python-add-to-list
 # https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
 # https://www.geeksforgeeks.org/python-boolean-list-initialization/
-#https://www.geeksforgeeks.org/python-math-function-sqrt/
+# https://www.geeksforgeeks.org/python-math-function-sqrt/
