@@ -56,6 +56,7 @@ col_count = 20
 number_count = 4 #The count of numbers in a sequence for which the product must be found
 
 last_row = row_count - number_count + 1
+last_col = col_count - number_count + 1
 
 # Get the product of a series of numbers
 def calc_product(values):
@@ -67,21 +68,48 @@ def calc_product(values):
 
 # Search by column
 for col in range(col_count):
-    max_product_so_far = 0
+    max_product_in_columns = 0
     for row in range(last_row):
         #print(row, col)
-
         values = []
         for i in range(number_count):
             number = numbers[row + i][col]
-            if number == 0:
+            if number == 0: #Skip any vectors containing 0
                 break
             values.append(number)
-        if len(values) == number_count:
+        if len(values) == number_count: #Only process vectors containing number_count (4) values
+            product = calc_product(values)
+            if product > max_product_in_columns:
+                max_product_in_columns = product
+    #print("****************")
+print("max product in columns:", max_product_in_columns)
+
+# Search by row
+for row in range(row_count):
+    max_product_in_rows = 0
+    for col in range(last_col):
+        #print(row, col)
+        values = []
+        for i in range(number_count):
+            number = numbers[row][col + i]
+            if number == 0: #Skip any vectors containing 0
+                break
+            values.append(number)
+        if len(values) == number_count: #Only process vectors containing number_count (4) values
             product = calc_product(values)
             print(values, product)
-            if product > max_product_so_far:
-                max_product_so_far = product
+            if product > max_product_in_rows:
+                max_product_in_rows = product
     print("****************")
-print("max product:", max_product_so_far)
+print("max product in rows:", max_product_in_rows)
 
+# Search by diagonal, top left to bottom right
+
+
+# Search by diagonal, top right to bottom left
+
+
+
+
+
+# References
