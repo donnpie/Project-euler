@@ -67,8 +67,8 @@ def calc_product(values):
     return sum
 
 # Search by column
+max_product_in_columns = 0
 for col in range(col_count):
-    max_product_in_columns = 0
     for row in range(last_row):
         #print(row, col)
         values = []
@@ -79,14 +79,15 @@ for col in range(col_count):
             values.append(number)
         if len(values) == number_count: #Only process vectors containing number_count (4) values
             product = calc_product(values)
+            #print(values, product)
             if product > max_product_in_columns:
                 max_product_in_columns = product
     #print("****************")
 print("max product in columns:", max_product_in_columns)
 
 # Search by row
+max_product_in_rows = 0
 for row in range(row_count):
-    max_product_in_rows = 0
     for col in range(last_col):
         #print(row, col)
         values = []
@@ -97,17 +98,50 @@ for row in range(row_count):
             values.append(number)
         if len(values) == number_count: #Only process vectors containing number_count (4) values
             product = calc_product(values)
-            print(values, product)
+            #print(values, product)
             if product > max_product_in_rows:
                 max_product_in_rows = product
-    print("****************")
+            #print(product, ", ", max_product_in_rows)
+    #print("****************")
 print("max product in rows:", max_product_in_rows)
 
 # Search by diagonal, top left to bottom right
-
+max_product_in_diagonal_lr = 0
+for row in range(last_row):
+    for col in range(last_col):
+        #print(row, col)
+        values = []
+        for i in range(number_count):
+            number = numbers[row + i][col + i]
+            if number == 0: #Skip any vectors containing 0
+                break
+            values.append(number)
+        if len(values) == number_count: #Only process vectors containing number_count (4) values
+            product = calc_product(values)
+            #print(values, product)
+            if product > max_product_in_diagonal_lr:
+                max_product_in_diagonal_lr = product
+    #print("****************")
+print("max product in diagonals left to right:", max_product_in_diagonal_lr)
 
 # Search by diagonal, top right to bottom left
-
+max_product_in_diagonal_rl = 0
+for row in range(last_row):
+    for col in range(number_count - 1, col_count):
+        #print(row, col)
+        values = []
+        for i in range(number_count):
+            number = numbers[row + i][col - i]
+            if number == 0: #Skip any vectors containing 0
+                break
+            values.append(number)
+        if len(values) == number_count: #Only process vectors containing number_count (4) values
+            product = calc_product(values)
+            #print(values, product)
+            if product > max_product_in_diagonal_rl:
+                max_product_in_diagonal_rl = product
+    #print("****************")
+print("max product in diagonals right to left:", max_product_in_diagonal_rl)
 
 
 
