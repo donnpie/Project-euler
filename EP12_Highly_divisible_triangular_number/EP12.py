@@ -41,43 +41,46 @@ def calc_triangle_number(idx):
 # for idx in range(10000):
 #     print(calc_triangle_number(idx))
 
-for i in range(1, 20):
+for i in range(1, 100):
     calc_triangle_number(500*i)
-print(triangles)
+#print(triangles)
 
 # Step 2: write a function that calculates and counts the factors for a given triangle number
-
+# break number into its prime factors
+# x = a^m * b^n * c^p
+# number of factors = (m+1)(n+1)(p+1)
+# Copy of solution by iGbanam; see stackoverflow article below
 def count_divisors(number):
-    if number == 1:
-        return 1
-    count = 2 #1 and the number itself if automatically included as divisors
-    limit = number // 2
-    #print("limit: ", limit)
-    for divisor in range(2, limit + 1):
-        if number % divisor == 0:
-            count += 1
-    return count
+    limit = number
+    number_of_divisors = 1
+    i = 2
+    while i < limit:
+        #print("i: ", i)
+        if number % i == 0:
+            #print("number % i is True")
+            limit = number / i
+            #print("limit: ", limit)
+            number_of_divisors += 1
+            #print("number_of_divisors: ", number_of_divisors)
+        #else:
+            #print("number % i is False")
+        i += 1
+    return number_of_divisors * 2
 
-# counter = 1
-# number_of_divisors = 1
-# while number_of_divisors < 10:
-#     number_of_divisors = count_divisors(counter)
-#     print("counter: ", counter, "result: ", number_of_divisors)
-#     counter += 1
+#print("number_of_divisors:", count_divisors(100))
 
 # Step 3: Loop through the triangle numbers starting at 1 and check the number of factors. Stop when the number of factors exceeds 500
 for number in triangles:
     number_of_divisors = count_divisors(number)
-    print("number: ", number, "result: ", number_of_divisors)
+    #print("number: ", number, "result: ", number_of_divisors)
     if number_of_divisors > 500:
         break
-
-
+print("number: ", number, "result: ", number_of_divisors)
 
 # Resources
 # https://www2.math.upenn.edu/~deturck/m170/wk2/numdivisors.html#:~:text=In%20general%2C%20if%20you%20have,exponents%20%2B%201%22s%20together.
-
-
+# https://www.google.com/search?q=fast+way+to+calculate+number+of+divisors&oq=fast+way+to+calculate+number+of+divisors&aqs=chrome..69i57j0i22i30j0i390l3.17330j0j7&sourceid=chrome&ie=UTF-8
+# https://stackoverflow.com/questions/110344/algorithm-to-calculate-the-number-of-divisors-of-a-given-number
 
 
 
