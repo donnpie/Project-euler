@@ -6,14 +6,12 @@
 # How many such routes are there through a 20×20 grid?
 
 # Solve using dynamic programming
-# For an m rows by n colums array
-# There is exactly 1 way to reach array[0, 0]
-
+# For an m rows by n colums array there is exactly 1 way to reach array[0, 0]
 
 # Declare an n by m array
 # Rows go top to bottom and use index i
 # Columns go right to left and use index j
-rows, cols = (21, 21)
+rows, cols = (21, 21) # Have to add 1 to each dimension to get right number of rows and cols
 # arr = [[0]*cols]*rows # Don't use this - see resource 3
 arr = [[0 for j in range(cols)] for i in range(rows)]
 
@@ -30,32 +28,9 @@ for j in range(cols):
 for j in range(1, cols):
     for i in range(1, rows):
         arr[i][j] = arr[i-1][j] + arr[i][j-1]
-
-print("result:", arr[rows-1][cols-1])
-
-
-
-
-
 print(arr)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+print("result:", arr[rows-1][cols-1])
 
 # Resources
 # 01. https://www.geeksforgeeks.org/python-using-2d-arrays-lists-the-right-way/
