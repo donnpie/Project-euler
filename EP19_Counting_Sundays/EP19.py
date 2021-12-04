@@ -48,7 +48,7 @@ class Date:
 
     @staticmethod
     def get_ref_date():
-        """Returns a Date object containing the reference date (Mon 1900/01/01)"""
+        """Returns a Date object containing the reference date (Mon 1900/01/01). This date was a Monday"""
         return Date(1900, 1, 1, 1)
 
     @staticmethod
@@ -75,9 +75,6 @@ class Date:
     def next_day(self):
         """Returns the next date (one day) after the current date. Returns a Date object"""
 
-        # print("self.month in max_day[31]", self.month in Date.max_day[31])
-        # print("self.day == 31", self.day == 31)
-        # print("self.month != 12", self.month != 12)
         # For feb 29
         if Date.is_leap_year(self.year) and self.month == 2 and self.day == 28:
             return Date(self.year, self.month, self.day + 1, self.get_next_weekday())
@@ -104,7 +101,7 @@ class Date:
         if self.month == 12 and self.day == 31:
             return Date(self.year + 1, 1, 1, self.get_next_weekday())
 
-        # For days 1 - 27:
+        # For days 1 - 27 of any month:
         if self.day > 0 and self.day < 28:
             return Date(self.year, self.month, self.day + 1, self.get_next_weekday())
 
@@ -133,9 +130,10 @@ class Date:
         weekday_name = self.get_weekday_name()
         return "{}, {}/{}/{}".format(weekday_name, self.year, self.month, self.day)
 
-# Test next day function
+# Test next_day function
 #date = Date(2000, 11, 20)
 #next_day = Date.get_ref_date()
+
 # Using the next_day function, it was calculated that 1901/1/1 was a Tuesday
 days = []
 next_day = Date(1901, 1, 1, 2)
