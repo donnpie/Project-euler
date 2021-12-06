@@ -12,7 +12,6 @@
 def read_file(file):
     """Read the numbers from a file"""
     with open(file, 'r') as f:
-        #lines = f.readlines()
         names = f.read()
         f.close()
     return names
@@ -21,8 +20,6 @@ def clean_names(names):
     """Get names into list and remove unnecesary characters"""
     names = names.replace('"', '')
     names = names.split(",")
-    # for name in names:
-    #     print(name)
     return names
 
 def a_value(string):
@@ -30,11 +27,8 @@ def a_value(string):
     value = 0
     for char in string:
         ascii_val = ord(char) - 64
-        #print(ascii_val)
         value += ascii_val
     return value
-
-
 
 # Driver code
 names = read_file('names.txt')
@@ -49,16 +43,6 @@ for i in range(len(names)):
 
 print("The total score is", total)
 
-
-
-
-
-
-
-
 # Resources
 # 01 https://careerkarma.com/blog/python-remove-character-from-string/
 # 02 https://www.programiz.com/python-programming/examples/ascii-character
-
-
-
