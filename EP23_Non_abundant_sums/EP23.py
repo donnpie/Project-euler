@@ -20,6 +20,8 @@
 # Iterate through the range 1 to 28123. If a number is not contain in the list then it is not the sum of two abundant numbers. Add this number to a new list (call it not_abundant_sum)
 # Add all these number together
 
+# The answer is 4179871
+
 import enum
 import math
 import time
@@ -71,28 +73,15 @@ t1 = time.time() #start time to test how long the program runs
 upper_lim = 28123
 abundant_nums = []
 for x in range(2, upper_lim + 1):
-    result = check_abundance(x)
-    if result == NumType.abundant.name:
+    if check_abundance(x) == NumType.abundant.name:
         abundant_nums.append(x)
 
 #print(abundant_nums)
+
 t2 = time.time()
 print("Segment 1 ran in {} sec".format(t2 - t1))
 
 # Find all the sums of pairs of abundant nums
-# sums = []
-# for i in range(len(abundant_nums)):
-#     for j in range(i, len(abundant_nums)):
-#         #print(i, j)
-#         the_sum = abundant_nums[i] + abundant_nums[j]
-#         if the_sum > upper_lim:
-#             break
-#         if the_sum not in sums:
-#             sums.append(the_sum)
-
-# sums.sort()
-# print(sums)
-
 sums_set = set(())
 for i in range(len(abundant_nums)):
     for j in range(i, len(abundant_nums)):
@@ -114,9 +103,12 @@ max_sum = max(sums)
 print("max_sum", max_sum)
 
 not_abundant_sums = []
-for i in range(1, max_sum):
-    if i not in sums:
-        not_abundant_sums.append(i)
+start_val = 1
+for idx in range(len(sums)):
+    end_val = sums[idx]
+    for j in range(start_val, end_val):
+        not_abundant_sums.append(j)
+    start_val = end_val + 1
 
 #print(not_abundant_sums)
 
