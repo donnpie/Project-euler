@@ -11,72 +11,38 @@
 # expressed as the sum of two abundant numbers is less than this limit.
 # Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 
-# Approach to the problem
-# Find all the abundant numbers < 28123 and store in a list
-    # For each number find the proper divisors then check for deficienct/perfection/abundance
-# Find the sums of all pairs of abundant numbers
-# Store these values in a list
-# Sort the list from smallest to largest
-# Iterate through the range 1 to 28123. If a number is not contain in the list then it is not the sum of two abundant numbers. Add this number to a new list (call it not_abundant_sum)
-# Add all these number together
-
 # The answer is 4179871
 
-import enum
 import math
 import time
 
-def get_divisors(num): #Copied from EP21
-    """Returns a list of the proper divisors of num"""
-    divisors = []
-    limit = math.floor(math.sqrt(num))
-    for i in range(1, limit + 1):
-        if num%i == 0:
-            divisors.append(i)
-            if i != num//i and i != 1:
-                divisors.append(num//i)
-    return divisors
+def get_abundant_nums(first_num, last_num):
+    """Returns a list of abundant numbers for the range between first_num and last_num (inclusive)"""
+    abundant_nums = []
+    for num in range(first_num, last_num + 1):
+        limit = math.floor(math.sqrt(num))
+        sum_of_divisors = 0
+        for i in range(1, limit + 1): # Find proper divisors of num
+            if num%i == 0:
+                sum_of_divisors += i
+                if i != num//i and i != 1:
+                    sum_of_divisors += num//i
+        if sum_of_divisors > num:
+            abundant_nums.append(num)
+    return abundant_nums
 
-def add_list(list): #Copied from EP21
+def add_list(list): # Copied from EP21
     result = 0
     for num in list:
         result += num
     return result
 
-class NumType(enum.Enum):
-    abundant = 1
-    deficient = 2
-    perfect = 3
-
-def check_abundance(num):
-    """Retuns 'abundant' if sum of num's proper divisors > num,
-    Retuns 'deficient' if sum of num's proper divisors < num
-    Retuns 'perfect' if sum of num's proper divisors = num
-    """
-    divisors = get_divisors(num)
-    total = add_list(divisors)
-    result = total - num
-    if result > 0:
-        return NumType.abundant.name
-    elif result < 0:
-        return NumType.deficient.name
-    else:
-        return NumType.perfect.name
-
-# Test code
-#print(check_abundance(12))
-
 # Driver code
-t1 = time.time() #start time to test how long the program runs
+t1 = time.time()
 
 # Find all abundant numbers < 28123
 upper_lim = 28123
-abundant_nums = []
-for x in range(2, upper_lim + 1):
-    if check_abundance(x) == NumType.abundant.name:
-        abundant_nums.append(x)
-
-#print(abundant_nums)
+abundant_nums = get_abundant_nums(2, upper_lim)
 
 t2 = time.time()
 print("Segment 1 ran in {} sec".format(t2 - t1))
@@ -85,34 +51,20 @@ print("Segment 1 ran in {} sec".format(t2 - t1))
 sums_set = set(())
 for i in range(len(abundant_nums)):
     for j in range(i, len(abundant_nums)):
-        #print(i, j)
         the_sum = abundant_nums[i] + abundant_nums[j]
         if the_sum > upper_lim:
             break
         sums_set.add(the_sum)
 
-sums=list(sums_set)
-sums.sort()
-#print(sums)
-
 t3 = time.time()
 print("Segment 2 ran in {} sec".format(t3 - t2))
 
 # Find the numbers that cannot be represented as the sum of two abundant numbers
-max_sum = max(sums)
-print("max_sum", max_sum)
+max_sum = max(sums_set)
+all_nums = {x for x in range(1, max_sum + 1)}
+not_abundant_sums = all_nums - sums_set
 
-not_abundant_sums = []
-start_val = 1
-for idx in range(len(sums)):
-    end_val = sums[idx]
-    for j in range(start_val, end_val):
-        not_abundant_sums.append(j)
-    start_val = end_val + 1
-
-#print(not_abundant_sums)
-
-answer = add_list(not_abundant_sums)
+answer = add_list(not_abundant_sums) # Turns out this way is faster than using the reduce function
 print("The answer is", answer)
 
 t4 = time.time()
@@ -124,15 +76,4 @@ print("Segment 3 ran in {} sec".format(t4 - t3))
 # 03 https://www.w3schools.com/python/python_sets.asp
 # 04 https://www.geeksforgeeks.org/set-add-python/
 # 05 https://www.geeksforgeeks.org/python-convert-set-into-a-list/
-
-
-
-
-
-
-
-
-
-
-
-
+# 06 https://python-reference.readthedocs.io/en/latest/docs/comprehensions/set_comprehension.html
